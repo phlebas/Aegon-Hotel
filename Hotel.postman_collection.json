@@ -1,0 +1,44 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Hotel",
+		"_postman_id": "7d5c1efc-31ed-ce42-f2e8-8c6bd1002d08",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080",
+			"request": {
+				"url": "localhost:8080/bookings/customer/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Root of the Hotel application."
+			},
+			"response": []
+		},
+		{
+			"name": "GetBookings",
+			"request": {
+				"url": "localhost:8080/bookings/customer/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Returns bookings from room"
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerBookings",
+			"request": {
+				"url": "localhost:8080/bookings/customer/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Returns bookings for customer"
+			},
+			"response": []
+		}
+	]
+}
