@@ -54,14 +54,4 @@ public class HotelApplication {
                 }
         );
     }
-
 }
-
-
-//TODO      A GET message which will retrieve any bookings for a specific room ID
-
-//TODO		A GET message which will retrieve any bookings for a specific customer ID
-
-//TODO		A GET message to determine the availability of a specific room during a given date range
-
-//TODO		A POST message to create a new booking.
