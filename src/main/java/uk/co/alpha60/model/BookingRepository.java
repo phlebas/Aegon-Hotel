@@ -15,6 +15,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("select b from Booking b where b.id = :roomId and " +
             "((:checkIn >= b.checkIn and :checkIn <= b.checkOut) or" +
-            " (:checkOut >= b.checkOut and :checkout <= b.checkOut) )")
+            " (:checkOut >= b.checkOut and :checkOut <= b.checkOut) )")
     List<Booking> getBookings(@Param("roomId") Long roomId, @Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut);
 }

@@ -54,6 +54,7 @@ public class BookingRestControllerTest {
     private RoomRepository roomRepository;
     private Booking booking1;
     private Customer customer1;
+    private Room room1;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -76,7 +77,7 @@ public class BookingRestControllerTest {
 
         customer1 = customerRepository.save(new Customer(1L, "customer1"));
 
-        Room room1 = new Room(1L, 1, 100.0f);
+        room1 = new Room(1L, 1, 100.0f);
         room1 = roomRepository.save(room1);
         Room room2 = new Room(2L, 1, 100.0f);
         room2 = roomRepository.save(room2);
@@ -95,7 +96,30 @@ public class BookingRestControllerTest {
 
     @Test
     public void getBookingsForRoom() throws Exception {
+        mockMvc.perform(get("/bookings/room/" + room1.getId())
+                .content(this.json(new Booking()))
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$[0].id", is(booking1.getId().intValue())))
+                .andExpect(jsonPath("$[0].checkOut", is(booking1.getCheckOut().format(ISO_DATE))))
+                .andExpect(jsonPath("$[0].checkIn", is(booking1.getCheckIn().format(ISO_DATE))));
+    }
 
+    @Test
+    public void checkIsRoomBooked() throws Exception {
+        String urlTemplate = "/bookings/available/" + room1.getId()
+                + "/" + booking1.getCheckIn().format(ISO_DATE)
+                + "/" + booking1.getCheckOut().format(ISO_DATE);
+        mockMvc.perform(get(urlTemplate)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType));
+    }
+
+    @Test
+    public void postBookingForRoom() throws Exception {
+        //TODO
     }
 
     @Test
@@ -107,8 +131,7 @@ public class BookingRestControllerTest {
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$[0].id", is(booking1.getId().intValue())))
                 .andExpect(jsonPath("$[0].checkOut", is(booking1.getCheckOut().format(ISO_DATE))))
-                .andExpect(jsonPath("$[0].checkIn", is(booking1.getCheckIn().format(ISO_DATE))))
-        ;
+                .andExpect(jsonPath("$[0].checkIn", is(booking1.getCheckIn().format(ISO_DATE))));
     }
 
     @Test
