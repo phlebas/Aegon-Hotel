@@ -1,20 +1,23 @@
 package uk.co.alpha60.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
 public class Booking {
 
-    @JsonIgnore
-    @ManyToOne
-    private Customer customer;
-
     @Id
     @GeneratedValue
+    @JsonFormat
     private Long id;
+
+    @ManyToOne
+    private Customer customer;
 
     @ManyToOne
     private Room room;

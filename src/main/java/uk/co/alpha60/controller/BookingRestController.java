@@ -72,39 +72,17 @@ public class BookingRestController {
 
     /**
      * Makes a booking for a room.
-     * @param noOfGuests the number of guests. Can be either 1 or 2
-     * @param customerId the cutomer's Id
-     * @param checkIn the desired check in date
-     * @param checkOut the desired check out date
+     * @param booking the booking object
      * @return the Booking object created.
      */
     @RequestMapping(path="/book", method= RequestMethod.POST)
-    public Booking makeBooking(@RequestParam Integer noOfGuests, @RequestParam Long customerId,
-                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkIn,
-                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOut) {
+    public Booking makeBooking(@RequestBody Booking booking) {
 
-        validateDates(checkIn, checkOut);
-        validateNoOfGuests(noOfGuests);
-        Room room = findRoom(noOfGuests, checkIn, checkOut);
-        Customer customer = validateCustomerId(customerId);
-        return bookingRepository.save(new Booking(null, room, customer, checkIn, checkOut));
+        validateDates(booking.getCheckIn(), booking.getCheckOut());
+        validateRoom(booking.getId());
+        validateCustomerId(booking.getCustomer().getId());
+        return bookingRepository.save(booking);
 
-    }
-
-    private Room findRoom(Integer noOfGuests, LocalDate checkIn, LocalDate checkOut) {
-        List<Room> rooms = roomRepository.findByOccupancy(noOfGuests);
-        for (Room room : rooms) {
-            if (roomHasNoBookings(room.getId(), checkIn, checkOut)) {
-                return room;
-            }
-        }
-        throw new NoAvailableRoomExecption();
-    }
-
-    private void validateNoOfGuests(Integer noOfGuests) {
-        if (noOfGuests < 1 || noOfGuests > 2) {
-            throw new InvalidOccupancyException(noOfGuests);
-        }
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {

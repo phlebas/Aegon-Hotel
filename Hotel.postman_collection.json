@@ -21,7 +21,7 @@
 		{
 			"name": "GetBookings",
 			"request": {
-				"url": "localhost:8080/bookings/customer/1",
+				"url": "localhost:8080//bookings/available/1/2017-02-22/2017-02-25",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -37,6 +37,17 @@
 				"header": [],
 				"body": {},
 				"description": "Returns bookings for customer"
+			},
+			"response": []
+		},
+		{
+			"name": "CheckRoomAvailability",
+			"request": {
+				"url": "localhost:8080//bookings/available/1/2017-02-22/2017-02-25",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Checks to see if a room is free between specified dates."
 			},
 			"response": []
 		}

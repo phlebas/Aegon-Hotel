@@ -1,8 +1,7 @@
 package uk.co.alpha60.model;
 
-import com.sun.javafx.beans.IDProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +16,7 @@ public class Customer {
     private Long id;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     Set<Booking> bookings = new HashSet<>();
 
     public Customer() {}

@@ -1,6 +1,7 @@
 package uk.co.alpha60.controller;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import static java.time.format.DateTimeFormatter.ISO_DATE;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -97,7 +99,6 @@ public class BookingRestControllerTest {
     @Test
     public void getBookingsForRoom() throws Exception {
         mockMvc.perform(get("/bookings/room/" + room1.getId())
-                .content(this.json(new Booking()))
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -118,14 +119,24 @@ public class BookingRestControllerTest {
     }
 
     @Test
+    @Ignore("JSON representation of booking does not include customer, room or id fields.")
     public void postBookingForRoom() throws Exception {
-        //TODO
+        String urlTemplate = "/bookings/book";
+        LocalDate checkIn = LocalDate.now().plusDays(10);
+        Booking booking = new Booking(2L, room1, customer1, checkIn, checkIn.plusDays(12));
+
+        String json = json(booking);
+
+        mockMvc.perform(post(urlTemplate)
+                .content(json)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType));
     }
 
     @Test
     public void findSingleBookingForCustomer() throws Exception {
         mockMvc.perform(get("/bookings/customer/" + customer1.getId())
-                .content(this.json(new Booking()))
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -137,7 +148,6 @@ public class BookingRestControllerTest {
     @Test
     public void customerNotFound() throws Exception {
         mockMvc.perform(get("/bookings/customer/0")
-                .content(this.json(new Booking()))
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
     }
@@ -145,7 +155,6 @@ public class BookingRestControllerTest {
     @Test
     public void roomNotFound() throws Exception {
         mockMvc.perform(get("/bookings/room/0")
-                .content(this.json(new Booking()))
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
     }
