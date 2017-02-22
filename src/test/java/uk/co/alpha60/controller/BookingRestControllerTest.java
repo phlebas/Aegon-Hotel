@@ -19,8 +19,11 @@ import uk.co.alpha60.model.*;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+import static java.time.format.DateTimeFormatter.ISO_DATE;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -107,8 +110,8 @@ public class BookingRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$[0].id", is(booking1.getId().intValue())))
-//   TODO proper date mappers for JSON             .andExpect(jsonPath("$[0].checkOut", is(booking1.getCheckOut())))
-//                .andExpect(jsonPath("$[0].ckeckIn", is(booking1.getCheckIn())))
+                .andExpect(jsonPath("$[0].checkOut", is(booking1.getCheckOut().format(ISO_DATE))))
+                .andExpect(jsonPath("$[0].checkIn", is(booking1.getCheckIn().format(ISO_DATE))))
         ;
     }
 
