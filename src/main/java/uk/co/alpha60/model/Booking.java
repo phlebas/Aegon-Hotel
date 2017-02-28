@@ -1,7 +1,5 @@
 package uk.co.alpha60.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +11,6 @@ public class Booking {
 
     @Id
     @GeneratedValue
-    @JsonFormat
     private Long id;
 
     @ManyToOne
