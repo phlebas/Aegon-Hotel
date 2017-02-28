@@ -50,6 +50,26 @@
 				"description": "Checks to see if a room is free between specified dates."
 			},
 			"response": []
+		},
+		{
+			"name": "PostBooking",
+			"request": {
+				"url": "http://localhost:8080/bookings/book",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":2,\"customer\":{\"id\":1,\"bookings\":[],\"customerName\":\"customer1\"},\"room\":{\"id\":1,\"bookings\":[],\"rate\":100.0,\"occupancy\":1},\"checkIn\":\"2017-03-10\",\"checkOut\":\"2017-03-22\"}"
+				},
+				"description": "Creates a booking"
+			},
+			"response": []
 		}
 	]
 }
